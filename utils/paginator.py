@@ -44,9 +44,9 @@ class HistoryPaginator(Paginator):
                                          callback_data=f'{self.page_now}:page_now'))
         page_kb.add(InlineKeyboardButton(text='Вперед ▶️',
                                          callback_data=f'{self.page_now}:page_next_keys'))
-        page_kb.row(InlineKeyboardButton(text='🔽 Вернуться в список объявлений',
-                                         callback_data='back_to_keys'))
+        page_kb.row(InlineKeyboardButton(text='🔽 Вернуться в личный кабинет',
+                                         callback_data='back_to_personal_area'))
         return page_kb.as_markup()
 
     def __str__(self):
-        return '<b>Список объявлений:</b>'
+        return '<b>🔴 Список ваших активаций:</b>'

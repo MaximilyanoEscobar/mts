@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -35,6 +35,8 @@ class MyTariff(BaseModel):
     promoCode: Optional[str]
     cppId: Optional[str]
 
+    def __str__(self):
+        return f"Подключенный сейчас тариф: {self.contentName}"
 
 class MyTariffsList(BaseModel):
     tariffs: List[Optional[MyTariff]]
@@ -50,8 +52,13 @@ class Tariff(BaseModel):
     isTrial: bool
 
 
+
+
 class TariffList(BaseModel):
     tariffs: List[Optional[Tariff]]
+
+    def __str__(self):
+        return f"Возможные для подключения тарифы:"
 
 
 class ActivationResponse(BaseModel):

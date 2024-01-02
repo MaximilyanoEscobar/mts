@@ -40,7 +40,7 @@ class MessageMiddleware(BaseMiddleware):
         user_repo = UsersRepository()
         return await user_repo.add_new_user(user_data=User(
             tg_id=event.from_user.id,
-            tg_name=event.from_user.username))
+            username=event.from_user.username))
 
     async def throttling(self, event: Message):
         user_id = f'{event.from_user.id}'

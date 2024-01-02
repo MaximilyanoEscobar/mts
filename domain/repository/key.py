@@ -11,7 +11,7 @@ class KeysRepository(BasesRepository):
         super().__init__(db_name)
 
     async def get_all_keys(self) -> List[Optional[Key]]:
-        return [Key(**key_data) for key_data in self._db]
+        return [Key(**self._db[id]) for id in self._db]
 
     async def get_key_data_by_id(self, id: str) -> Optional[Key]:
         try:
@@ -28,13 +28,13 @@ class KeysRepository(BasesRepository):
             return False
 
     async def get_key_data_by_key(self, key: str) -> Optional[Key]:
-        for key_data in self._db:
-            key_data = Key(**key_data)
+        for id in self._db:
+            key_data = Key(**self._db[id])
             if key_data.key == key:
                 return key_data
 
     async def get_keys_data_by_user_id(self, user_id: str) -> List[Optional[Key]]:
-        return [Key(**key_data) for key_data in self._db if Key(**key_data).user_id == user_id]
+        return [Key(**self._db[id]) for id in self._db if Key(**self._db[id]).user_id == user_id]
 
     async def add_new_key(self, key_data: Key) -> str:
         id = await self.get_new_id()

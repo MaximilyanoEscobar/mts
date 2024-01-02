@@ -36,8 +36,8 @@ class BaseRequest(object):
 
 
 class MtsAPI(BaseRequest):
-    def __init__(self):
-        super().__init__(base_url='https://api.music.yandex.net/payclick')
+    def __init__(self, base_url='https://api.music.yandex.net/payclick'):
+        super().__init__(base_url=base_url)
 
     async def get_tariff_now(self, phone_number: str) -> MyTariffsList:
         params = {"msisdn": phone_number}

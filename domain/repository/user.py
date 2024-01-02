@@ -20,7 +20,7 @@ class UsersRepository(BasesRepository):
             return False
 
     async def get_all_users(self) -> List[Optional[User]]:
-        return [User(**user_data) for user_data in self._db]
+        return [User(**self._db[id]) for id in self._db]
 
     async def get_user_by_id(self, id: str) -> Optional[User]:
         try:
@@ -47,10 +47,7 @@ class UsersRepository(BasesRepository):
             return False
 
     async def get_user_by_tg_id(self, tg_id: int) -> Optional[User]:
-        try:
-            for user_data in self._db:
-                user_data = User(**user_data)
-                if user_data.tg_id == tg_id:
-                    return user_data
-        except Exception as e:
-            return None
+        for id in self._db:
+            user_data = User(**self._db[id])
+            if user_data.tg_id == tg_id:
+                return user_data

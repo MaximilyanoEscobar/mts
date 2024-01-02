@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 
 class InputUser(StatesGroup):
+    test_phone_number = State()
     phone_number = State()
     key = State()
 
