@@ -8,12 +8,10 @@ from domain.model.key import Key
 
 
 class Paginator:
-    def __init__(self, items, page_now=0, move_page=1, per_page=10):
+    def __init__(self, items, page_now=0, per_page=10):
         self.items: list = items
         self.per_page = per_page
         self.page_now = page_now
-        self.move_page = move_page
-
     def generate_page(self):
         ...
 
@@ -22,8 +20,8 @@ class Paginator:
 
 
 class HistoryPaginator(Paginator):
-    def __init__(self, items: List[Key], page_now=1, move_page=1, per_page=5):
-        super().__init__(items=items, page_now=page_now, move_page=move_page, per_page=per_page)
+    def __init__(self, items: List[Key], page_now=1, per_page=5):
+        super().__init__(items=items, page_now=page_now, per_page=per_page)
 
     def generate_page(self) -> InlineKeyboardMarkup:
         keys: List[Key] = self.items

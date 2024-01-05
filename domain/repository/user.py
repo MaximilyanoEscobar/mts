@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import List, Optional
 
 from domain.model.user import User
@@ -30,6 +31,7 @@ class UsersRepository(BasesRepository):
 
     async def update_user_by_id(self, id: str, user_data: User) -> bool:
         try:
+            user_data.updated_at = datetime.now()
             self._db[id] = json.loads(user_data.model_dump_json())
             await self._update_db()
             return True
@@ -37,14 +39,11 @@ class UsersRepository(BasesRepository):
             return False
 
     async def ban_user_by_id(self, id: str) -> bool:
-        try:
-            user_data = await self.get_user_by_id(id)
-            if user_data:
-                user_data.is_banned = True
-                return await self.update_user_by_id(id, user_data)
-            return False
-        except Exception as e:
-            return False
+        user_data = await self.get_user_by_id(id)
+        if user_data:
+            user_data.is_banned = True
+            return await self.update_user_by_id(id, user_data)
+        return False
 
     async def get_user_by_tg_id(self, tg_id: int) -> Optional[User]:
         for id in self._db:

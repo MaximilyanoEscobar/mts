@@ -1,5 +1,8 @@
 import json
+import random
+import string
 import uuid
+from datetime import datetime
 from typing import List, Optional
 
 from domain.model.key import Key
@@ -21,6 +24,7 @@ class KeysRepository(BasesRepository):
 
     async def update_key_data_by_id(self, id: str, key_data: Key) -> bool:
         try:
+            key_data.updated_at = datetime.now()
             self._db[id] = json.loads(key_data.model_dump_json())
             await self._update_db()
             return True
@@ -36,9 +40,8 @@ class KeysRepository(BasesRepository):
     async def get_keys_data_by_user_id(self, user_id: str) -> List[Optional[Key]]:
         return [Key(**self._db[id]) for id in self._db if Key(**self._db[id]).user_id == user_id]
 
-    async def add_new_key(self, key_data: Key) -> str:
+    async def add_new_key(self, key_data: Key = Key()) -> str:
         id = await self.get_new_id()
         key_data.id = id
-        key_data.key = uuid.uuid4().__str__()
         await self.update_key_data_by_id(id, key_data)
         return key_data.key

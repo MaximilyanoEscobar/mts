@@ -16,7 +16,7 @@ class InputUser(StatesGroup):
 load_dotenv()
 
 MESSAGE_SPAM_TIME = os.getenv("MESSAGE_SPAM_TIME")
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv('bot_token')
 
 bots_list = [Bot(token=BOT_TOKEN, parse_mode='html')]
 dp = Dispatcher(storage=MemoryStorage())

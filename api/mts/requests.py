@@ -55,7 +55,7 @@ class MtsAPI(BaseRequest):
         json_data = {
             "userId": f"00000000100090099{uid}",
             "bindingId": f"88b32A591b86Dbcaa98b{bid}",
-            "msisdn": phone_number.replace("+", "", 1),
+            "msisdn": phone_number,
             "contentId": content_id
         }
         response = await self._request(method='POST', endpoint='subscriptions', json=json_data)

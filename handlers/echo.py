@@ -3,7 +3,8 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, FSInputFile, CallbackQuery
 
-from data.keyboard import generate_start_kb, check_number_kb_text, generate_cancel_input_kb, cancel_input_cd
+from data.keyboard import generate_start_kb, check_number_kb_text, generate_cancel_input_kb, cancel_input_cd, \
+    help_kb_text, generate_help_kb
 from loader import InputUser
 
 echo_router = Router()
@@ -12,9 +13,9 @@ echo_router = Router()
 @echo_router.message(Command('start'))
 async def echo_start(message: Message):
     await message.answer_photo(photo=FSInputFile(path='data/start_message.jpg'),
-                               caption='🦔 Еж-Шэдоу приветствует тебя! 🦔\n'
+                               caption='<b>🦔 <u>Еж-Шэдоу приветствует тебя!</u> 🦔\n'
                                        'Добро пожаловать в бота для подключения MTS-PREMIUM! 🚀\n'
-                                       'Ознакомься с выпавшей снизу клавиатурой и начни получать удовольствие вместе со мной! 😊🔴',
+                                       'Ознакомься с выпавшей снизу клавиатурой и начни получать удовольствие вместе со мной! 😊🔴</b>',
                                reply_markup=generate_start_kb())
 
 
@@ -30,6 +31,18 @@ async def check_number(message: Message, state: FSMContext):
 async def cancel_callback_query(call: CallbackQuery, state: FSMContext):
     await call.message.edit_text(f'<b>🔴 Действие отменено</b>')
     await state.clear()
+
+
+@echo_router.message(F.text == help_kb_text)
+async def help_kb(message: Message):
+    await message.delete()
+    await message.answer('<b>🔴 Меню помощи:</b>',
+                         reply_markup=generate_help_kb())
+
+
+@echo_router.callback_query()
+async def callback_query(call: CallbackQuery):
+    await call.message.edit_text('<b>🔴 Я не понимаю вас..</b>')
 
 
 @echo_router.message()
