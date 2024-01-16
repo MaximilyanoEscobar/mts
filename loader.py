@@ -14,7 +14,6 @@ class InputUser(StatesGroup):
 
 
 load_dotenv()
-
 MESSAGE_SPAM_TIME = os.getenv("MESSAGE_SPAM_TIME")
 BOT_TOKEN = os.getenv('bot_token')
 

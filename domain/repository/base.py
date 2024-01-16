@@ -1,10 +1,12 @@
 import json
 import logging
+import os
 
 
 class BasesRepository:
     def __init__(self, db_name):
-        with open(f'db/{db_name}', mode='r') as f:
+        path = os.getcwd().replace('\\', '/')
+        with open(f'{path}/db/{db_name}', mode='r') as f:
             self._db_name = db_name
             self._db: dict = json.loads(f.read())
 
