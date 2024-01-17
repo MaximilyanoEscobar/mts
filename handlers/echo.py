@@ -5,14 +5,14 @@ from aiogram.types import Message, FSInputFile, CallbackQuery
 
 from data.keyboard import generate_start_kb, check_number_kb_text, generate_cancel_input_kb, cancel_input_cd, \
     help_kb_text, generate_help_kb
-from loader import InputUser
+from loader import InputUser, ROOT_PATH
 
 echo_router = Router()
 
 
 @echo_router.message(Command('start'))
 async def echo_start(message: Message):
-    await message.answer_photo(photo=FSInputFile(path='data/start_message.jpg'),
+    await message.answer_photo(photo=FSInputFile(path=f'{ROOT_PATH}/data/start_message.jpg'),
                                caption='<b>🦔 <u>Еж-Шэдоу приветствует тебя!</u> 🦔\n'
                                        'Добро пожаловать в бота для подключения MTS-PREMIUM! 🚀\n'
                                        'Ознакомься с выпавшей снизу клавиатурой и начни получать удовольствие вместе со мной! 😊🔴</b>',

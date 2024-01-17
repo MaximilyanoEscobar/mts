@@ -5,6 +5,7 @@ from aiogram.types import Message, CallbackQuery, FSInputFile
 from data.keyboard import personal_area_kb_text, generate_personal_area_kb, my_accounts_cd, activate_history_cd
 from domain.repository.key import KeysRepository
 from domain.repository.user import UsersRepository
+from loader import ROOT_PATH
 from utils.paginator import HistoryPaginator
 
 personal_area_router = Router()
@@ -15,7 +16,7 @@ async def message_personal_area(message: Message):
     users_repo = UsersRepository()
     user_data = await users_repo.get_user_by_tg_id(tg_id=message.from_user.id)
 
-    await message.answer_photo(photo=FSInputFile(path='data/personal_area.jpg'),
+    await message.answer_photo(photo=FSInputFile(path=f'{ROOT_PATH}/data/personal_area.jpg'),
                                caption=user_data.__str__(),
                                reply_markup=generate_personal_area_kb())
 

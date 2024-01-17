@@ -1,22 +1,22 @@
 import json
 import logging
-import os
+
+from loader import ROOT_PATH
 
 
 class BasesRepository:
     def __init__(self, db_name):
-        path = os.getcwd().replace('\\', '/')
-        with open(f'{path}/db/{db_name}', mode='r') as f:
+        with open(f'{ROOT_PATH}/db/{db_name}', mode='r') as f:
             self._db_name = db_name
             self._db: dict = json.loads(f.read())
 
     async def _update_db(self) -> bool:
         try:
-            with open(f'db/{self._db_name}', 'w') as file:
+            with open(f'{ROOT_PATH}/db/{self._db_name}', 'w') as file:
                 json.dump(self._db, file, indent=2)
             return True
         except FileNotFoundError:
-            logging.error(f'db/{self._db_name}')
+            logging.error(f'{ROOT_PATH}/db/{self._db_name}')
             raise
 
     async def get_new_id(self) -> str:
