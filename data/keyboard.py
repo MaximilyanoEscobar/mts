@@ -25,7 +25,7 @@ def generate_help_kb() -> InlineKeyboardMarkup:
     help_kb.row(InlineKeyboardButton(text='Где приобрести товар?',
                                      url='https://t.me/lavkashadow_bot'))
     help_kb.row(InlineKeyboardButton(text='Инструкция',
-                                     url='https://megamarket.ru/'))
+                                     url='https://teletype.in/@shadow1ch/E_ioX8IPdFj'))
     return help_kb.as_markup()
 
 activate_history_cd = 'my_activate_history'
@@ -57,7 +57,7 @@ def generate_available_subscriptions_kb(allowed_tariff_list: TariffList, with_cb
                            '165c5cc9-bd46-4cc1-a152-d4b873584113',
                            '8f734717-702e-42f4-bfaf-bc2240162ab6',
                            'c3be0b5c-760e-43e5-b089-24336ced1950']
-    for tariff in allowed_tariff_list.tariffs:
+    for tariff in allowed_tariff_list.root:
         if tariff.contentId in valid_subscriptions:
             available_subscriptions_kb.row(InlineKeyboardButton(text=tariff.contentName + ' 💳',
                                                                 callback_data=f'{tariff.contentId}:active_sub' if with_cb else '...'))

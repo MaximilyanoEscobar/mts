@@ -4,23 +4,7 @@
     "tg_id": 843356160,
     "username": "greido",
     "is_banned": false,
-    "created_at": "2023-12-30T15:26:12.656204",
-    "updated_at": "2023-12-30T15:26:12.656204"
-  },
-  "2": {
-    "id": "2",
-    "tg_id": 6101068218,
-    "username": "SHADOW1CH",
-    "is_banned": false,
-    "created_at": "2024-01-04T19:37:17.269086",
-    "updated_at": "2024-01-04T19:37:17.269086"
-  },
-  "3": {
-    "id": "3",
-    "tg_id": 5308242651,
-    "username": "foxpbh",
-    "is_banned": false,
-    "created_at": "2024-01-05T14:55:40.328702",
-    "updated_at": "2024-01-05T14:55:40.328702"
+    "created_at": "2024-02-05T09:10:50.734688",
+    "updated_at": "2024-02-05T09:10:50.734688"
   }
 }

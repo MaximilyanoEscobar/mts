@@ -19,7 +19,7 @@ class BasesRepository:
             logging.error(f'{ROOT_PATH}/db/{self._db_name}')
             raise
 
-    async def get_new_id(self) -> str:
+    async def _get_new_id(self) -> str:
         if self._db.__len__() == 0:
             return "1"
         return str(self._db.__len__() + 1)

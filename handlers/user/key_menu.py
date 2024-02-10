@@ -7,7 +7,9 @@ from aiohttp import ClientResponseError
 
 from api.mts.requests import MtsAPI
 from data.keyboard import key_input_kb_text, generate_cancel_input_kb
+from domain.model.phone import Phone
 from domain.repository.key import KeysRepository
+from domain.repository.phone import PhonesRepository
 from domain.repository.user import UsersRepository
 from loader import InputUser
 
@@ -63,6 +65,7 @@ async def active_sub_callback(call: CallbackQuery, state: FSMContext):
     phone_number = state_data.get('phone_number')
     key_id = state_data.get('id')
     keys_repo = KeysRepository()
+    phone_repo = PhonesRepository()
     key_data = await keys_repo.get_key_data_by_id(id=key_id)
     if key_data.is_used:
         return await call.message.answer('<b>🔴 Ключ уже был использован ❌</b>')
@@ -72,6 +75,8 @@ async def active_sub_callback(call: CallbackQuery, state: FSMContext):
                                                       content_id=content_id)
         if response.subscriptionId:
             key_data.is_used = True
+            phone_id = await phone_repo.add_new_phone(Phone(phone=phone_number, key_id=key_id))
+            key_data.phone_id = phone_id
             await keys_repo.update_key_data_by_id(id=key_id, key_data=key_data)
             return await call.message.edit_text(text='<b>🔴 Подписка успешно подключена! ✅</b>')
 

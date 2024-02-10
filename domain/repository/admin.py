@@ -8,3 +8,5 @@ class AdminsRepository(BasesRepository):
 
     def get_all(self) -> Admin:
         return Admin(**self._db)
+
+

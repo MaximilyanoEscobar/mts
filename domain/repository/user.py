@@ -12,7 +12,7 @@ class UsersRepository(BasesRepository):
 
     async def add_new_user(self, user_data: User) -> bool:
         try:
-            id = await self.get_new_id()
+            id = await self._get_new_id()
             user_data.id = id
             self._db[id] = json.loads(user_data.model_dump_json())
             await self._update_db()
@@ -21,7 +21,7 @@ class UsersRepository(BasesRepository):
             return False
 
     async def get_all_users(self) -> List[Optional[User]]:
-        return [User(**self._db[id]) for id in self._db]
+        return [User.model_validate(self._db[id]) for id in self._db]
 
     async def get_user_by_id(self, id: str) -> Optional[User]:
         try:

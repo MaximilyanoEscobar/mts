@@ -42,12 +42,12 @@ class MtsAPI(BaseRequest):
     async def get_tariff_now(self, phone_number: str) -> MyTariffsList:
         params = {"msisdn": phone_number}
         response = await self._request(method='GET', endpoint='subscriptions', params=params)
-        return MyTariffsList(tariffs=[MyTariff(**iter_data) for iter_data in json.loads(response.text)])
+        return MyTariffsList.model_validate_json(response.text)
 
     async def get_tariff_list(self, phone_number: str) -> TariffList:
         params = {"msisdn": phone_number}
         response = await self._request(method='GET', endpoint='content-provider/available-subscriptions', params=params)
-        return TariffList(tariffs=[Tariff(**iter_data) for iter_data in json.loads(response.text)])
+        return TariffList.model_validate_json(response.text)
 
     async def activate_mts_premium(self, phone_number: str, content_id: str) -> ActivationResponse:
         uid = await self._generate_uid

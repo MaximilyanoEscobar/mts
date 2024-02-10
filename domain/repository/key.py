@@ -41,7 +41,7 @@ class KeysRepository(BasesRepository):
         return [Key(**self._db[id]) for id in self._db if Key(**self._db[id]).user_id == user_id]
 
     async def add_new_key(self, key_data: Key = Key()) -> str:
-        id = await self.get_new_id()
+        id = await self._get_new_id()
         key_data.id = id
         await self.update_key_data_by_id(id, key_data)
         return key_data.key

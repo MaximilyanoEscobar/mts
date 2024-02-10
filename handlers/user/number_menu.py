@@ -38,14 +38,17 @@ async def input_phone_number(message: Message, state: FSMContext):
     await state.clear()
     mts_api = MtsAPI()
     phone_number = search.group(0)
-    my_tariff_list = await mts_api.get_tariff_now(phone_number=phone_number)
+    try:
+        my_tariff_list = await mts_api.get_tariff_now(phone_number=phone_number)
+    except Exception as e:
+        return await message.reply(f'<b>🔴 Произошла ошибка: {e}</b>')
     try:
         allowed_tariff_list = await mts_api.get_tariff_list(phone_number=phone_number)
     except ClientResponseError:
         return await message.reply('<b>🔴 Произошла проблема с номером, проверьте его правильность</b>')
     text_to_answer = '🔴 '
-    if bool(my_tariff_list.tariffs.__len__()):
-        text_to_answer += my_tariff_list.tariffs[0].__str__() + '\n'
+    if bool(my_tariff_list.root.__len__()):
+        text_to_answer += my_tariff_list.root.pop().__str__() + '\n'
     text_to_answer += f'{allowed_tariff_list.__str__()}'
     text_to_answer = '<b>' + text_to_answer + '</b>'
 

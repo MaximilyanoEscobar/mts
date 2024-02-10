@@ -14,14 +14,14 @@ echo_router = Router()
 async def echo_start(message: Message):
     await message.answer_photo(photo=FSInputFile(path=f'{ROOT_PATH}/data/start_message.jpg'),
                                caption='<b>🦔 <u>Еж-Шэдоу приветствует тебя!</u> 🦔\n'
-                                       'Добро пожаловать в бота для подключения MTS-PREMIUM! 🚀\n'
+                                       'Добро пожаловать в бота для подключения <i>MTS-PREMIUM! </i>🚀\n'
                                        'Ознакомься с выпавшей снизу клавиатурой и начни получать удовольствие вместе со мной! 😊🔴</b>',
                                reply_markup=generate_start_kb())
 
 
 @echo_router.message(F.text == check_number_kb_text)
 async def check_number(message: Message, state: FSMContext):
-    message = await message.reply('<b>🔴 Пришли мне номер телефона для проверки возможных подписок для подключения</b>',
+    message = await message.reply('<b>🔴 Пришлите мне номер телефона для проверки возможных подписок для подключения</b>',
                                   reply_markup=generate_cancel_input_kb())
     await state.update_data(message=message)
     await state.set_state(InputUser.test_phone_number)
@@ -34,6 +34,7 @@ async def cancel_callback_query(call: CallbackQuery, state: FSMContext):
 
 
 @echo_router.message(F.text == help_kb_text)
+@echo_router.message(Command('help'))
 async def help_kb(message: Message):
     await message.delete()
     await message.answer('<b>🔴 Меню помощи:</b>',

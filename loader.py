@@ -12,6 +12,8 @@ class InputUser(StatesGroup):
     key = State()
 
 
+class InputAdmin(StatesGroup):
+    count_keys = State()
 
 load_dotenv()
 MESSAGE_SPAM_TIME = os.getenv("MESSAGE_SPAM_TIME")

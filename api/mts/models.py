@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 
 
 class BaseRequestModel(BaseModel):
@@ -12,39 +12,39 @@ class BaseRequestModel(BaseModel):
 class MyTariff(BaseModel):
     subscriptionId: str
     contentId: str
-    channelId: Optional[str]
+    channelId: Any
     price: float
     period: int
     isPremiumSubscriber: bool
     isMtsSubscriber: bool
-    subscriptionDate: datetime
-    tarifficationDate: datetime
-    nextTarifficationDate: datetime
-    defaultTarifficationStartDate: Optional[datetime]
+    subscriptionDate: str
+    tarifficationDate: str
+    nextTarifficationDate: str
+    defaultTarifficationStartDate: Any
     tarifficationStatus: int
     contentName: str
     isTrial: bool
     isTrialProvided: bool
     isPromoCodePeriod: bool
     internalId: str
-    sdpId: Optional[str]
-    ecId: Optional[str]
+    sdpId: Any
+    ecId: Any
     serviceGroupName: str
     bindingId: str
     userId: str
-    promoCode: Optional[str]
-    cppId: Optional[str]
+    promoCode: Any
+    cppId: Any
 
     def __str__(self):
         return f"Подключенный сейчас тариф: {self.contentName}"
 
-class MyTariffsList(BaseModel):
-    tariffs: List[Optional[MyTariff]]
+class MyTariffsList(RootModel):
+    root: List[MyTariff]
 
 
 class Tariff(BaseModel):
     contentId: str
-    channelId: Optional[str]
+    channelId: Any
     contentName: str
     period: int
     trialPeriod: int
@@ -54,8 +54,8 @@ class Tariff(BaseModel):
 
 
 
-class TariffList(BaseModel):
-    tariffs: List[Optional[Tariff]]
+class TariffList(RootModel):
+    root: List[Tariff]
 
     def __str__(self):
         return f"Возможные для подключения тарифы:"
